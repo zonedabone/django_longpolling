@@ -26,7 +26,8 @@ class BaseLongPollingView(View):
         self.args = args
         self.kwargs = kwargs
         self.timeout = self.kwargs.get('channel')
-        response = HttpResponse(self._iterator(handler))
+        response = HttpResponse()
+        response.streaming_content = self._iterator(handler)
         response['Cache-Control'] = 'no-cache'
         return response
 
